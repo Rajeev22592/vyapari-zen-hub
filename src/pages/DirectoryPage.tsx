@@ -7,9 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const DirectoryPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { t } = useLanguage();
 
   const traders = [
     {
@@ -72,12 +74,12 @@ const DirectoryPage = () => {
         {/* Page Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Trader Directory</h1>
-            <p className="text-muted-foreground">Connect with verified traders</p>
+            <h1 className="text-2xl font-bold text-foreground">{t("directory.title")}</h1>
+            <p className="text-muted-foreground">{t("directory.subtitle")}</p>
           </div>
           <Button size="sm" className="bg-primary hover:bg-primary/90">
             <UserPlus className="h-4 w-4 mr-2" />
-            Join Network
+            {t("directory.join")}
           </Button>
         </div>
 
@@ -86,7 +88,7 @@ const DirectoryPage = () => {
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search traders, business, speciality..."
+              placeholder={t("directory.search")}
               className="pl-10"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -102,25 +104,25 @@ const DirectoryPage = () => {
           <Card className="bg-gradient-success/10 border-primary/20">
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-primary">2,456</div>
-              <div className="text-sm text-muted-foreground">Active Traders</div>
+              <div className="text-sm text-muted-foreground">{t("directory.stats.active")}</div>
             </CardContent>
           </Card>
           <Card className="bg-accent/10 border-accent/20">
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-accent-foreground">1,890</div>
-              <div className="text-sm text-muted-foreground">Verified</div>
+              <div className="text-sm text-muted-foreground">{t("directory.stats.verified")}</div>
             </CardContent>
           </Card>
           <Card className="bg-grain/10 border-grain/20">
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-grain-foreground">156</div>
-              <div className="text-sm text-muted-foreground">Cities</div>
+              <div className="text-sm text-muted-foreground">{t("directory.stats.cities")}</div>
             </CardContent>
           </Card>
           <Card className="bg-muted/50">
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-foreground">4.8</div>
-              <div className="text-sm text-muted-foreground">Avg Rating</div>
+              <div className="text-sm text-muted-foreground">{t("directory.stats.rating")}</div>
             </CardContent>
           </Card>
         </div>
@@ -142,7 +144,7 @@ const DirectoryPage = () => {
                       <h3 className="font-semibold text-foreground">{trader.name}</h3>
                       {trader.verified && (
                         <Badge className="bg-gradient-success text-primary-foreground text-xs">
-                          ✓ Verified
+                          ✓ {t("directory.verified")}
                         </Badge>
                       )}
                     </div>
@@ -163,7 +165,7 @@ const DirectoryPage = () => {
               <CardContent className="pt-0">
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Speciality:</p>
+                    <p className="text-sm text-muted-foreground mb-1">{t("directory.speciality")}</p>
                     <p className="text-sm font-medium text-foreground">{trader.speciality}</p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -173,10 +175,10 @@ const DirectoryPage = () => {
                     </div>
                     <div className="space-x-2">
                       <Button variant="outline" size="sm">
-                        View Profile
+                        {t("directory.viewProfile")}
                       </Button>
                       <Button size="sm" className="bg-primary hover:bg-primary/90">
-                        Connect
+                        {t("directory.connect")}
                       </Button>
                     </div>
                   </div>

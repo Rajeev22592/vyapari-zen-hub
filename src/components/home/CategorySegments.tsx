@@ -1,49 +1,51 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CategorySegments = () => {
+  const { t } = useLanguage();
   const segments = [
     { 
       emoji: "🌾", 
-      name: "Grains", 
+      name: t("categories.grains"), 
       path: "/bhav/grains",
       color: "grain",
-      description: "Wheat, Rice, Bajra"
+      description: t("categories.grains.desc")
     },
     { 
       emoji: "🌶️", 
-      name: "Spices", 
+      name: t("categories.spices"), 
       path: "/bhav/spices",
       color: "spice",
-      description: "Turmeric, Coriander, Cumin"
+      description: t("categories.spices.desc")
     },
     { 
       emoji: "🛢️", 
-      name: "Oils", 
+      name: t("categories.oils"), 
       path: "/bhav/oils",
       color: "oil",
-      description: "Mustard, Groundnut, Sunflower"
+      description: t("categories.oils.desc")
     },
     { 
       emoji: "🧺", 
-      name: "Dry Fruits", 
+      name: t("categories.dryFruits"), 
       path: "/bhav/dry-fruits",
       color: "fruit",
-      description: "Almonds, Cashews, Dates"
+      description: t("categories.dryFruits.desc")
     },
     { 
       emoji: "🍚", 
-      name: "Rice", 
+      name: t("categories.rice"), 
       path: "/bhav/rice",
       color: "rice",
-      description: "Basmati, Non-Basmati, Broken"
+      description: t("categories.rice.desc")
     }
   ];
 
   return (
     <section className="mx-4 my-6">
       <h2 className="text-xl font-semibold text-foreground mb-4">
-        🌾 Explore Segments
+        🌾 {t("categories.title")}
       </h2>
       
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">

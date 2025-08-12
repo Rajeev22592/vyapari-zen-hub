@@ -3,30 +3,32 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BhavHighlights = () => {
+  const { t } = useLanguage();
   const highlights = [
     {
-      commodity: "Gehu (Wheat)",
+      commodity: t("bhav.wheat"),
       price: "₹2,830",
       change: "+20",
-      location: "Bikaner Mandi",
+      location: t("bhav.location.bikaner"),
       trend: "up",
       category: "grain"
     },
     {
-      commodity: "Jeera (Cumin)",
+      commodity: t("bhav.cumin"),
       price: "₹38,100",
       change: "-150",
-      location: "Rajkot Mandi",
+      location: t("bhav.location.rajkot"),
       trend: "down",
       category: "spice"
     },
     {
-      commodity: "Sarson Oil",
+      commodity: t("bhav.mustardOil"),
       price: "₹1,450",
       change: "+25",
-      location: "Delhi Mandi",
+      location: t("bhav.location.delhi"),
       trend: "up",
       category: "oil"
     }
@@ -36,11 +38,11 @@ const BhavHighlights = () => {
     <section className="mx-4 my-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-foreground flex items-center">
-          📊 Daily Bhav Highlights
+          📊 {t("bhav.highlights.title")}
         </h2>
         <Link to="/bhav">
           <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80">
-            View All <ArrowRight className="ml-1 h-4 w-4" />
+            {t("bhav.highlights.viewAll")} <ArrowRight className="ml-1 h-4 w-4" />
           </Button>
         </Link>
       </div>

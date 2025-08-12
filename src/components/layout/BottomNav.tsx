@@ -1,16 +1,18 @@
 import { Home, TrendingUp, Users, Newspaper, Settings } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BottomNav = () => {
   const location = useLocation();
+  const { t } = useLanguage();
 
   const navItems = [
-    { icon: Home, label: "होम", path: "/" },
-    { icon: TrendingUp, label: "भाव", path: "/bhav" },
-    { icon: Users, label: "नेटवर्क", path: "/directory" },
-    { icon: Newspaper, label: "न्यूज", path: "/broadcast" },
-    { icon: Settings, label: "और", path: "/more" },
+    { icon: Home, label: t("nav.home"), path: "/" },
+    { icon: TrendingUp, label: t("nav.bhav"), path: "/bhav" },
+    { icon: Users, label: t("nav.network"), path: "/directory" },
+    { icon: Newspaper, label: t("nav.news"), path: "/broadcast" },
+    { icon: Settings, label: t("nav.more"), path: "/more" },
   ];
 
   return (
