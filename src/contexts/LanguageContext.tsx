@@ -173,7 +173,22 @@ const translations = {
     "enam.totalMandis": "Total Registered Mandis",
     "enam.totalStates": "States & UTs",
     "enam.liveMarkets": "Live Markets Today",
-    "enam.commoditiesTraded": "Commodities Traded"
+    "enam.commoditiesTraded": "Commodities Traded",
+    
+    // Bhav Page
+    "bhav.title": "e-NAM Live Prices",
+    "bhav.subtitle": "Real-time commodity rates from mandis",
+    "bhav.noResults": "No commodities found matching your filters",
+    
+    // Stats
+    "stats.marketsUp": "Markets Up",
+    "stats.marketsDown": "Markets Down", 
+    "stats.totalMandis": "Total Mandis",
+    "stats.commodities": "Commodities",
+    
+    // Common
+    "common.filter": "Filter",
+    "language": "en"
   },
   hi: {
     // Header
@@ -337,7 +352,22 @@ const translations = {
     "enam.totalMandis": "कुल पंजीकृत मंडियां",
     "enam.totalStates": "राज्य और केंद्र शासित प्रदेश",
     "enam.liveMarkets": "आज लाइव मार्केट",
-    "enam.commoditiesTraded": "व्यापार की जाने वाली कमोडिटी"
+    "enam.commoditiesTraded": "व्यापार की जाने वाली कमोडिटी",
+    
+    // Bhav Page
+    "bhav.title": "ई-नाम लाइव भाव",
+    "bhav.subtitle": "मंडियों से रियल-टाइम कमोडिटी दरें",
+    "bhav.noResults": "आपके फिल्टर से मेल खाने वाली कोई वस्तु नहीं मिली",
+    
+    // Stats
+    "stats.marketsUp": "बाजार ऊपर",
+    "stats.marketsDown": "बाजार नीचे",
+    "stats.totalMandis": "कुल मंडियां",
+    "stats.commodities": "कमोडिटीज़",
+    
+    // Common
+    "common.filter": "फिल्टर",
+    "language": "hi"
   }
 };
 

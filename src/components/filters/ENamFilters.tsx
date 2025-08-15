@@ -48,23 +48,99 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
     search: ""
   });
 
-  // Indian states with their districts and mandis
+  // e-NAM registered states with districts and mandis (based on actual e-NAM data)
   const statesData: Record<string, StateData> = {
+    "andhra-pradesh": {
+      name: { en: "Andhra Pradesh", hi: "आंध्र प्रदेश" },
+      districts: {
+        "krishna": {
+          name: { en: "Krishna", hi: "कृष्णा" },
+          mandis: [
+            { id: "vijayawada-mandi", name: { en: "Vijayawada APMC", hi: "विजयवाड़ा एपीएमसी" } },
+            { id: "machilipatnam-mandi", name: { en: "Machilipatnam APMC", hi: "मछलीपट्टनम एपीएमसी" } }
+          ]
+        },
+        "guntur": {
+          name: { en: "Guntur", hi: "गुंटूर" },
+          mandis: [
+            { id: "guntur-mandi", name: { en: "Guntur APMC", hi: "गुंटूर एपीएमसी" } },
+            { id: "tenali-mandi", name: { en: "Tenali APMC", hi: "तेनाली एपीएमसी" } }
+          ]
+        }
+      }
+    },
+    "karnataka": {
+      name: { en: "Karnataka", hi: "कर्नाटक" },
+      districts: {
+        "bangalore": {
+          name: { en: "Bangalore", hi: "बेंगलुरु" },
+          mandis: [
+            { id: "hessarghatta-mandi", name: { en: "Hessarghatta APMC", hi: "हेसरघट्टा एपीएमसी" } },
+            { id: "yeshwantpur-mandi", name: { en: "Yeshwantpur APMC", hi: "येशवंतपुर एपीएमसी" } }
+          ]
+        },
+        "mysore": {
+          name: { en: "Mysore", hi: "मैसूर" },
+          mandis: [
+            { id: "mysore-mandi", name: { en: "Mysore APMC", hi: "मैसूर एपीएमसी" } },
+            { id: "mandya-mandi", name: { en: "Mandya APMC", hi: "मांड्या एपीएमसी" } }
+          ]
+        }
+      }
+    },
+    "maharashtra": {
+      name: { en: "Maharashtra", hi: "महाराष्ट्र" },
+      districts: {
+        "pune": {
+          name: { en: "Pune", hi: "पुणे" },
+          mandis: [
+            { id: "pune-mandi", name: { en: "Pune APMC", hi: "पुणे एपीएमसी" } },
+            { id: "maval-mandi", name: { en: "Maval APMC", hi: "मावल एपीएमसी" } }
+          ]
+        },
+        "nashik": {
+          name: { en: "Nashik", hi: "नासिक" },
+          mandis: [
+            { id: "nashik-mandi", name: { en: "Nashik APMC", hi: "नासिक एपीएमसी" } },
+            { id: "lasalgaon-mandi", name: { en: "Lasalgaon APMC", hi: "लासलगांव एपीएमसी" } }
+          ]
+        }
+      }
+    },
+    "uttar-pradesh": {
+      name: { en: "Uttar Pradesh", hi: "उत्तर प्रदेश" },
+      districts: {
+        "agra": {
+          name: { en: "Agra", hi: "आगरा" },
+          mandis: [
+            { id: "agra-mandi", name: { en: "Agra Mandi", hi: "आगरा मंडी" } },
+            { id: "etmadpur-mandi", name: { en: "Etmadpur Mandi", hi: "एतमादपुर मंडी" } }
+          ]
+        },
+        "lucknow": {
+          name: { en: "Lucknow", hi: "लखनऊ" },
+          mandis: [
+            { id: "lucknow-mandi", name: { en: "Lucknow Mandi", hi: "लखनऊ मंडी" } },
+            { id: "malihabad-mandi", name: { en: "Malihabad Mandi", hi: "मलीहाबाद मंडी" } }
+          ]
+        }
+      }
+    },
     "rajasthan": {
       name: { en: "Rajasthan", hi: "राजस्थान" },
       districts: {
-        "bikaner": {
-          name: { en: "Bikaner", hi: "बीकानेर" },
-          mandis: [
-            { id: "bikaner-mandi", name: { en: "Bikaner Mandi", hi: "बीकानेर मंडी" } },
-            { id: "nokha-mandi", name: { en: "Nokha Mandi", hi: "नोखा मंडी" } }
-          ]
-        },
         "jaipur": {
           name: { en: "Jaipur", hi: "जयपुर" },
           mandis: [
             { id: "jaipur-mandi", name: { en: "Jaipur Mandi", hi: "जयपुर मंडी" } },
             { id: "chomu-mandi", name: { en: "Chomu Mandi", hi: "चोमू मंडी" } }
+          ]
+        },
+        "bikaner": {
+          name: { en: "Bikaner", hi: "बीकानेर" },
+          mandis: [
+            { id: "bikaner-mandi", name: { en: "Bikaner Mandi", hi: "बीकानेर मंडी" } },
+            { id: "nokha-mandi", name: { en: "Nokha Mandi", hi: "नोखा मंडी" } }
           ]
         }
       }
@@ -75,13 +151,15 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
         "ludhiana": {
           name: { en: "Ludhiana", hi: "लुधियाना" },
           mandis: [
-            { id: "ludhiana-mandi", name: { en: "Ludhiana Mandi", hi: "लुधियाना मंडी" } }
+            { id: "ludhiana-mandi", name: { en: "Ludhiana Mandi", hi: "लुधियाना मंडी" } },
+            { id: "khanna-mandi", name: { en: "Khanna Mandi", hi: "खन्ना मंडी" } }
           ]
         },
         "amritsar": {
           name: { en: "Amritsar", hi: "अमृतसर" },
           mandis: [
-            { id: "amritsar-mandi", name: { en: "Amritsar Mandi", hi: "अमृतसर मंडी" } }
+            { id: "amritsar-mandi", name: { en: "Amritsar Mandi", hi: "अमृतसर मंडी" } },
+            { id: "ajnala-mandi", name: { en: "Ajnala Mandi", hi: "अजनाला मंडी" } }
           ]
         }
       }
@@ -92,7 +170,15 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
         "karnal": {
           name: { en: "Karnal", hi: "करनाल" },
           mandis: [
-            { id: "karnal-mandi", name: { en: "Karnal Mandi", hi: "करनाल मंडी" } }
+            { id: "karnal-mandi", name: { en: "Karnal Mandi", hi: "करनाल मंडी" } },
+            { id: "taraori-mandi", name: { en: "Taraori Mandi", hi: "तरावड़ी मंडी" } }
+          ]
+        },
+        "hisar": {
+          name: { en: "Hisar", hi: "हिसार" },
+          mandis: [
+            { id: "hisar-mandi", name: { en: "Hisar Mandi", hi: "हिसार मंडी" } },
+            { id: "hansi-mandi", name: { en: "Hansi Mandi", hi: "हांसी मंडी" } }
           ]
         }
       }
@@ -103,23 +189,120 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
         "rajkot": {
           name: { en: "Rajkot", hi: "राजकोट" },
           mandis: [
-            { id: "rajkot-mandi", name: { en: "Rajkot Mandi", hi: "राजकोट मंडी" } }
+            { id: "rajkot-mandi", name: { en: "Rajkot APMC", hi: "राजकोट एपीएमसी" } },
+            { id: "gondal-mandi", name: { en: "Gondal APMC", hi: "गोंडल एपीएमसी" } }
+          ]
+        },
+        "ahmedabad": {
+          name: { en: "Ahmedabad", hi: "अहमदाबाद" },
+          mandis: [
+            { id: "ahmedabad-mandi", name: { en: "Ahmedabad APMC", hi: "अहमदाबाद एपीएमसी" } },
+            { id: "bavla-mandi", name: { en: "Bavla APMC", hi: "बावला एपीएमसी" } }
+          ]
+        }
+      }
+    },
+    "madhya-pradesh": {
+      name: { en: "Madhya Pradesh", hi: "मध्य प्रदेश" },
+      districts: {
+        "indore": {
+          name: { en: "Indore", hi: "इंदौर" },
+          mandis: [
+            { id: "indore-mandi", name: { en: "Indore Mandi", hi: "इंदौर मंडी" } },
+            { id: "dewas-mandi", name: { en: "Dewas Mandi", hi: "देवास मंडी" } }
+          ]
+        },
+        "bhopal": {
+          name: { en: "Bhopal", hi: "भोपाल" },
+          mandis: [
+            { id: "bhopal-mandi", name: { en: "Bhopal Mandi", hi: "भोपाल मंडी" } },
+            { id: "sehore-mandi", name: { en: "Sehore Mandi", hi: "सीहोर मंडी" } }
+          ]
+        }
+      }
+    },
+    "telangana": {
+      name: { en: "Telangana", hi: "तेलंगाना" },
+      districts: {
+        "hyderabad": {
+          name: { en: "Hyderabad", hi: "हैदराबाद" },
+          mandis: [
+            { id: "gaddiannaram-mandi", name: { en: "Gaddiannaram APMC", hi: "गड्डियानराम एपीएमसी" } },
+            { id: "bowenpally-mandi", name: { en: "Bowenpally APMC", hi: "बोवेनपल्ली एपीएमसी" } }
+          ]
+        },
+        "warangal": {
+          name: { en: "Warangal", hi: "वारंगल" },
+          mandis: [
+            { id: "warangal-mandi", name: { en: "Warangal APMC", hi: "वारंगल एपीएमसी" } },
+            { id: "hanamkonda-mandi", name: { en: "Hanamkonda APMC", hi: "हनमकोंडा एपीएमसी" } }
           ]
         }
       }
     }
   };
 
+  // e-NAM commodity categories (based on actual e-NAM portal data)
   const commodities = [
-    { id: "all", name: { en: "All", hi: "सभी" } },
+    { id: "all", name: { en: "All Commodities", hi: "सभी जिंसें" } },
+    
+    // Cereals/Food Grains
     { id: "wheat", name: { en: "Wheat", hi: "गेहूं" } },
     { id: "rice", name: { en: "Rice", hi: "चावल" } },
-    { id: "cumin", name: { en: "Cumin", hi: "जीरा" } },
-    { id: "turmeric", name: { en: "Turmeric", hi: "हल्दी" } },
-    { id: "mustard", name: { en: "Mustard", hi: "सरसों" } },
+    { id: "basmati-rice", name: { en: "Basmati Rice", hi: "बासमती चावल" } },
+    { id: "bajra", name: { en: "Bajra", hi: "बाजरा" } },
+    { id: "jowar", name: { en: "Jowar", hi: "ज्वार" } },
+    { id: "maize", name: { en: "Maize", hi: "मक्का" } },
+    { id: "barley", name: { en: "Barley", hi: "जौ" } },
+    
+    // Pulses
+    { id: "arhar", name: { en: "Arhar/Tur", hi: "अरहर/तुअर" } },
+    { id: "chana", name: { en: "Chana", hi: "चना" } },
+    { id: "masur", name: { en: "Masur", hi: "मसूर" } },
+    { id: "urad", name: { en: "Urad", hi: "उड़द" } },
+    { id: "moong", name: { en: "Moong", hi: "मूंग" } },
+    { id: "kabuli-chana", name: { en: "Kabuli Chana", hi: "काबुली चना" } },
+    
+    // Oil Seeds
     { id: "groundnut", name: { en: "Groundnut", hi: "मूंगफली" } },
+    { id: "mustard", name: { en: "Mustard", hi: "सरसों" } },
+    { id: "soybean", name: { en: "Soybean", hi: "सोयाबीन" } },
+    { id: "sunflower", name: { en: "Sunflower", hi: "सूरजमुखी" } },
+    { id: "sesame", name: { en: "Sesame", hi: "तिल" } },
+    { id: "safflower", name: { en: "Safflower", hi: "कुसुम" } },
+    
+    // Spices
+    { id: "turmeric", name: { en: "Turmeric", hi: "हल्दी" } },
+    { id: "coriander", name: { en: "Coriander", hi: "धनिया" } },
+    { id: "cumin", name: { en: "Cumin", hi: "जीरा" } },
+    { id: "fenugreek", name: { en: "Fenugreek", hi: "मेथी" } },
+    { id: "red-chilli", name: { en: "Red Chilli", hi: "लाल मिर्च" } },
+    { id: "black-pepper", name: { en: "Black Pepper", hi: "काली मिर्च" } },
+    
+    // Vegetables
+    { id: "onion", name: { en: "Onion", hi: "प्याज" } },
+    { id: "potato", name: { en: "Potato", hi: "आलू" } },
+    { id: "tomato", name: { en: "Tomato", hi: "टमाटर" } },
+    { id: "cabbage", name: { en: "Cabbage", hi: "पत्ता गोभी" } },
+    { id: "cauliflower", name: { en: "Cauliflower", hi: "फूल गोभी" } },
+    { id: "brinjal", name: { en: "Brinjal", hi: "बैंगन" } },
+    
+    // Fruits
+    { id: "apple", name: { en: "Apple", hi: "सेब" } },
+    { id: "banana", name: { en: "Banana", hi: "केला" } },
+    { id: "orange", name: { en: "Orange", hi: "संतरा" } },
+    { id: "grapes", name: { en: "Grapes", hi: "अंगूर" } },
+    { id: "pomegranate", name: { en: "Pomegranate", hi: "अनार" } },
+    
+    // Cash Crops
     { id: "cotton", name: { en: "Cotton", hi: "कपास" } },
-    { id: "soybean", name: { en: "Soybean", hi: "सोयाबीन" } }
+    { id: "sugarcane", name: { en: "Sugarcane", hi: "गन्ना" } },
+    { id: "jute", name: { en: "Jute", hi: "जूट" } },
+    
+    // Others
+    { id: "coconut", name: { en: "Coconut", hi: "नारियल" } },
+    { id: "gur", name: { en: "Gur/Jaggery", hi: "गुड़" } },
+    { id: "honey", name: { en: "Honey", hi: "शहद" } }
   ];
 
   const { language } = useLanguage();
