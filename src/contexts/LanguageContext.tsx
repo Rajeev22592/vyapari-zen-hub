@@ -13,8 +13,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const translations = {
   en: {
     // Header
-    "header.title": "Vyapari Darbaar",
-    "header.subtitle": "Mandi Bhav & Network",
+    "header.title": "e-NAM",
+    "header.subtitle": "National Agriculture Market",
     "header.search": "Search commodities, traders...",
     
     // Navigation
@@ -25,8 +25,8 @@ const translations = {
     "nav.more": "More",
     
     // Home Page
-    "home.hero.title": "Vyapari Darbaar",
-    "home.hero.subtitle": "Your trusted mandi companion",
+    "home.hero.title": "e-NAM Portal",
+    "home.hero.subtitle": "National Agriculture Market - One Nation, One Market",
     "home.hero.search": "Search commodities...",
     "home.hero.searchBtn": "Search",
     "home.hero.location": "Select your trading area",
@@ -150,12 +150,35 @@ const translations = {
     "common.retry": "Retry",
     "common.cancel": "Cancel",
     "common.ok": "OK",
-    "common.language": "Language"
+    "common.language": "Language",
+    
+    // Filters
+    "filters.title": "Filters",
+    "filters.subtitle": "Choose your area and commodity. Selections auto-save.",
+    "filters.state": "State",
+    "filters.district": "District", 
+    "filters.market": "Market",
+    "filters.commodity": "Commodity",
+    "filters.search": "Search",
+    "filters.selectState": "Select State",
+    "filters.selectDistrict": "Select District",
+    "filters.selectMarket": "Select Market",
+    "filters.selectCommodity": "Select Commodity",
+    "filters.searchPlaceholder": "Type commodity name...",
+    
+    // e-NAM specific
+    "enam.title": "e-NAM Portal",
+    "enam.subtitle": "National Agriculture Market",
+    "enam.description": "A pan-India electronic trading portal which networks the existing APMC mandis to create a unified national market for agricultural commodities.",
+    "enam.totalMandis": "Total Registered Mandis",
+    "enam.totalStates": "States & UTs",
+    "enam.liveMarkets": "Live Markets Today",
+    "enam.commoditiesTraded": "Commodities Traded"
   },
   hi: {
     // Header
-    "header.title": "व्यापारी दरबार",
-    "header.subtitle": "मंडी भाव और नेटवर्क",
+    "header.title": "ई-नाम",
+    "header.subtitle": "राष्ट्रीय कृषि बाजार",
     "header.search": "वस्तुओं, व्यापारियों को खोजें...",
     
     // Navigation
@@ -166,8 +189,8 @@ const translations = {
     "nav.more": "और",
     
     // Home Page
-    "home.hero.title": "व्यापारी दरबार",
-    "home.hero.subtitle": "आपका विश्वसनीय मंडी साथी",
+    "home.hero.title": "ई-नाम पोर्टल",
+    "home.hero.subtitle": "राष्ट्रीय कृषि बाजार - एक राष्ट्र, एक बाजार",
     "home.hero.search": "वस्तुओं को खोजें...",
     "home.hero.searchBtn": "खोजें",
     "home.hero.location": "अपना व्यापारिक क्षेत्र चुनें",
@@ -291,7 +314,30 @@ const translations = {
     "common.retry": "पुनः प्रयास करें",
     "common.cancel": "रद्द करें",
     "common.ok": "ठीक है",
-    "common.language": "भाषा"
+    "common.language": "भाषा",
+    
+    // Filters
+    "filters.title": "फिल्टर",
+    "filters.subtitle": "अपना क्षेत्र और कमोडिटी चुनें। चयन स्वतः सेव हो जाता है।",
+    "filters.state": "राज्य",
+    "filters.district": "जिला",
+    "filters.market": "मंडी",
+    "filters.commodity": "कमोडिटी",
+    "filters.search": "खोज",
+    "filters.selectState": "राज्य चुनें",
+    "filters.selectDistrict": "जिला चुनें",
+    "filters.selectMarket": "मंडी चुनें",
+    "filters.selectCommodity": "कमोडिटी चुनें",
+    "filters.searchPlaceholder": "कमोडिटी का नाम टाइप करें...",
+    
+    // e-NAM specific
+    "enam.title": "ई-नाम पोर्टल",
+    "enam.subtitle": "राष्ट्रीय कृषि बाजार",
+    "enam.description": "एक अखिल भारतीय इलेक्ट्रॉनिक ट्रेडिंग पोर्टल जो मौजूदा APMC मंडियों को नेटवर्क करता है और कृषि वस्तुओं के लिए एक एकीकृत राष्ट्रीय बाजार बनाता है।",
+    "enam.totalMandis": "कुल पंजीकृत मंडियां",
+    "enam.totalStates": "राज्य और केंद्र शासित प्रदेश",
+    "enam.liveMarkets": "आज लाइव मार्केट",
+    "enam.commoditiesTraded": "व्यापार की जाने वाली कमोडिटी"
   }
 };
 
