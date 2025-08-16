@@ -12,7 +12,7 @@ const Header = () => {
         {/* Logo & Brand */}
         <div className="flex items-center space-x-2">
           <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow">
-            <span className="text-primary-foreground font-bold text-sm">e-NAM</span>
+            <span className="text-primary-foreground font-bold text-xs">VD</span>
           </div>
           <div className="hidden sm:block">
             <h1 className="text-lg font-bold text-foreground">{t("header.title")}</h1>

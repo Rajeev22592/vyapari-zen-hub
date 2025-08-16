@@ -13,8 +13,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const translations = {
   en: {
     // Header
-    "header.title": "e-NAM",
-    "header.subtitle": "National Agriculture Market",
+    "header.title": "Vyapari Darbaar",
+    "header.subtitle": "Trading Excellence Platform",
     "header.search": "Search commodities, traders...",
     
     // Navigation
@@ -25,8 +25,8 @@ const translations = {
     "nav.more": "More",
     
     // Home Page
-    "home.hero.title": "e-NAM Portal",
-    "home.hero.subtitle": "National Agriculture Market - One Nation, One Market",
+    "home.hero.title": "Vyapari Darbaar",
+    "home.hero.subtitle": "Connecting Farmers & Traders - Building Trust, Growing Together",
     "home.hero.search": "Search commodities...",
     "home.hero.searchBtn": "Search",
     "home.hero.location": "Select your trading area",
@@ -192,8 +192,8 @@ const translations = {
   },
   hi: {
     // Header
-    "header.title": "ई-नाम",
-    "header.subtitle": "राष्ट्रीय कृषि बाजार",
+    "header.title": "व्यापारी दरबार",
+    "header.subtitle": "व्यापारिक उत्कृष्टता मंच",
     "header.search": "वस्तुओं, व्यापारियों को खोजें...",
     
     // Navigation
@@ -204,8 +204,8 @@ const translations = {
     "nav.more": "और",
     
     // Home Page
-    "home.hero.title": "ई-नाम पोर्टल",
-    "home.hero.subtitle": "राष्ट्रीय कृषि बाजार - एक राष्ट्र, एक बाजार",
+    "home.hero.title": "व्यापारी दरबार",
+    "home.hero.subtitle": "किसान और व्यापारी को जोड़ना - विश्वास निर्माण, एक साथ बढ़ना",
     "home.hero.search": "वस्तुओं को खोजें...",
     "home.hero.searchBtn": "खोजें",
     "home.hero.location": "अपना व्यापारिक क्षेत्र चुनें",

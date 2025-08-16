@@ -40,9 +40,9 @@ const ENamStats = () => {
     <div className="px-4 py-6">
       <div className="space-y-4">
         <div className="text-center">
-          <h2 className="text-lg font-semibold text-foreground">{t("enam.title")}</h2>
+          <h2 className="text-lg font-semibold text-foreground">{t("header.title")}</h2>
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            {t("enam.description")}
+            {t("header.subtitle")} - Market insights and trading opportunities
           </p>
         </div>
 
