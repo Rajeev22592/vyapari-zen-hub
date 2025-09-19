@@ -4,67 +4,22 @@ import Header from "@/components/layout/Header";
 import BottomNav from "@/components/layout/BottomNav";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTraders } from "@/services/traders";
 
 const DirectoryPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { t } = useLanguage();
 
-  const traders = [
-    {
-      id: 1,
-      name: "Rajesh Kumar",
-      business: "Kumar Grain Traders",
-      location: "Bikaner, Rajasthan",
-      speciality: "Wheat, Barley, Mustard",
-      rating: 4.8,
-      verified: true,
-      phone: "+91 98765 43210",
-      avatar: "/api/placeholder/40/40"
-    },
-    {
-      id: 2,
-      name: "Suresh Patel",
-      business: "Patel Spice House",
-      location: "Rajkot, Gujarat",
-      speciality: "Cumin, Coriander, Turmeric",
-      rating: 4.9,
-      verified: true,
-      phone: "+91 97654 32109",
-      avatar: "/api/placeholder/40/40"
-    },
-    {
-      id: 3,
-      name: "Mohanlal Agarwal",
-      business: "Agarwal Oil Mills",
-      location: "Delhi",
-      speciality: "Mustard Oil, Groundnut Oil",
-      rating: 4.7,
-      verified: true,
-      phone: "+91 96543 21098",
-      avatar: "/api/placeholder/40/40"
-    },
-    {
-      id: 4,
-      name: "Ramesh Singh",
-      business: "Singh Rice Export",
-      location: "Karnal, Haryana",
-      speciality: "Basmati Rice, Non-Basmati",
-      rating: 4.6,
-      verified: false,
-      phone: "+91 95432 10987",
-      avatar: "/api/placeholder/40/40"
-    }
-  ];
+  const { data } = useQuery({ queryKey: ["traders", { search: searchTerm }], queryFn: () => fetchTraders({ search: searchTerm, page: 1, perPage: 20 }) });
+  const traders = data?.data || [];
 
-  const filteredTraders = traders.filter(trader =>
-    trader.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    trader.business.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    trader.speciality.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredTraders = traders;
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -77,10 +32,12 @@ const DirectoryPage = () => {
             <h1 className="text-2xl font-bold text-foreground">{t("directory.title")}</h1>
             <p className="text-muted-foreground">{t("directory.subtitle")}</p>
           </div>
-          <Button size="sm" className="bg-primary hover:bg-primary/90">
-            <UserPlus className="h-4 w-4 mr-2" />
-            {t("directory.join")}
-          </Button>
+          <Link to="/directory/join">
+            <Button size="sm" className="bg-primary hover:bg-primary/90">
+              <UserPlus className="h-4 w-4 mr-2" />
+              {t("directory.join")}
+            </Button>
+          </Link>
         </div>
 
         {/* Search & Filter */}
@@ -134,7 +91,7 @@ const DirectoryPage = () => {
               <CardHeader className="pb-3">
                 <div className="flex items-start space-x-4">
                   <Avatar className="h-12 w-12">
-                    <AvatarImage src={trader.avatar} alt={trader.name} />
+                    <AvatarImage src={(trader as any).avatarUrl || "/api/placeholder/40/40"} alt={trader.name} />
                     <AvatarFallback className="bg-primary text-primary-foreground">
                       {trader.name.split(' ').map(n => n[0]).join('')}
                     </AvatarFallback>
@@ -151,7 +108,7 @@ const DirectoryPage = () => {
                     <p className="text-sm font-medium text-muted-foreground">{trader.business}</p>
                     <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                       <MapPin className="h-3 w-3" />
-                      <span>{trader.location}</span>
+                      <span>{typeof trader.location === 'string' ? trader.location : (trader.location.label || `${trader.location.city || ''}${trader.location.state ? ', ' + trader.location.state : ''}`)}</span>
                     </div>
                   </div>
                   <div className="text-right">
@@ -166,17 +123,19 @@ const DirectoryPage = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm text-muted-foreground mb-1">{t("directory.speciality")}</p>
-                    <p className="text-sm font-medium text-foreground">{trader.speciality}</p>
+                    <p className="text-sm font-medium text-foreground">{Array.isArray(trader.specialities) ? trader.specialities.join(', ') : (trader as any).speciality || ''}</p>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                       <Phone className="h-3 w-3" />
-                      <span>{trader.phone}</span>
+                      <span>{(trader as any).phoneMasked || ''}</span>
                     </div>
                     <div className="space-x-2">
-                      <Button variant="outline" size="sm">
-                        {t("directory.viewProfile")}
-                      </Button>
+                      <Link to={`/directory/${trader.id}`}>
+                        <Button variant="outline" size="sm">
+                          {t("directory.viewProfile")}
+                        </Button>
+                      </Link>
                       <Button size="sm" className="bg-primary hover:bg-primary/90">
                         {t("directory.connect")}
                       </Button>

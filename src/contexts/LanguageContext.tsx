@@ -54,11 +54,17 @@ const translations = {
     "categories.oils": "Oils",
     "categories.dryFruits": "Dry Fruits",
     "categories.rice": "Rice",
-    "categories.grains.desc": "Wheat, Rice, Bajra",
-    "categories.spices.desc": "Turmeric, Coriander, Cumin",
-    "categories.oils.desc": "Mustard, Groundnut, Sunflower",
-    "categories.dryFruits.desc": "Almonds, Cashews, Dates",
-    "categories.rice.desc": "Basmati, Non-Basmati, Broken",
+    "categories.vegetables": "Vegetables",
+    "categories.fruits": "Fruits",
+    "categories.pulses": "Pulses",
+    "categories.grains.desc": "Wheat, Barley, Bajra (120 commodities)",
+    "categories.spices.desc": "Jeera, Dhaniya, Turmeric (9 commodities)",
+    "categories.oils.desc": "Mustard, Groundnut, Sunflower (11 commodities)",
+    "categories.dryFruits.desc": "Almond, Cashew, Dates (5 commodities)",
+    "categories.rice.desc": "Rice Varieties (1 commodity)",
+    "categories.vegetables.desc": "Tomato, Onion, Potato (28 commodities)",
+    "categories.fruits.desc": "Apple, Amla, Mango, Banana (31 commodities)",
+    "categories.pulses.desc": "Chana, Arhar, Moong (35 commodities)",
     
     // Quick Actions
     "actions.title": "Quick Actions",
@@ -233,11 +239,17 @@ const translations = {
     "categories.oils": "तेल",
     "categories.dryFruits": "सूखे मेवे",
     "categories.rice": "चावल",
-    "categories.grains.desc": "गेहूं, चावल, बाजरा",
-    "categories.spices.desc": "हल्दी, धनिया, जीरा",
-    "categories.oils.desc": "सरसों, मूंगफली, सूरजमुखी",
-    "categories.dryFruits.desc": "बादाम, काजू, खजूर",
-    "categories.rice.desc": "बासमती, नॉन-बासमती, टूटा",
+    "categories.vegetables": "सब्जियां",
+    "categories.fruits": "फल",
+    "categories.pulses": "दालें",
+    "categories.grains.desc": "गेहूं, जौ, बाजरा (120 जिंसें)",
+    "categories.spices.desc": "जीरा, धनिया, हल्दी (9 जिंसें)",
+    "categories.oils.desc": "सरसों, मूंगफली, सूरजमुखी (11 जिंसें)",
+    "categories.dryFruits.desc": "बादाम, काजू, खजूर (5 जिंसें)",
+    "categories.rice.desc": "चावल की किस्में (1 जिंस)",
+    "categories.vegetables.desc": "टमाटर, प्याज, आलू (28 जिंसें)",
+    "categories.fruits.desc": "सेब, आंवला, आम, केला (31 जिंसें)",
+    "categories.pulses.desc": "चना, अरहर, मूंग (35 जिंसें)",
     
     // Quick Actions
     "actions.title": "त्वरित कार्य",
@@ -383,7 +395,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const t = (key: string): string => {
-    return translations[language][key] || key;
+    return (translations[language] as any)[key] || key;
   };
 
   useEffect(() => {

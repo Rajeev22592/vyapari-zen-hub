@@ -5,56 +5,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { fetchNews } from "@/services/news";
 
 const BroadcastPage = () => {
-  const news = [
-    {
-      id: 1,
-      title: "Wheat Prices Show Upward Trend in North India",
-      summary: "Gehu bhav mein halka tezi dekhi gayi hai. Barish ki wajah se kharif crop ko nuksan hua hai, jiske karan demand badh gayi hai.",
-      content: "पूरा विवरण: गेहूं के भाव में आज हल्की तेजी देखी गई है। उत्तर भारत के प्रमुख मंडियों में गेहूं का भाव 20-30 रुपये प्रति क्विंटल बढ़ा है। बारिश के कारण खरीफ फसलों को नुकसान होने से गेहूं की मांग बढ़ गई है।",
-      time: "2 hours ago",
-      category: "Market Update",
-      urgent: true,
-      image: "/api/placeholder/400/200"
-    },
-    {
-      id: 2,
-      title: "Government Announces New MSP Rates",
-      summary: "नई न्यूनतम समर्थन मूल्य की घोषणा। किसानों को बेहतर दाम मिलने की उम्मीद।",
-      content: "सरकार ने आगामी रबी सीजन के लिए नई MSP दरों की घोषणा की है। गेहूं के लिए MSP 2125 रुपये प्रति क्विंटल निर्धारित की गई है, जो पिछले साल से 110 रुपये अधिक है।",
-      time: "4 hours ago",
-      category: "Policy",
-      urgent: false,
-      image: "/api/placeholder/400/200"
-    },
-    {
-      id: 3,
-      title: "Cumin Export Demand Increases",
-      summary: "अंतर्राष्ट्रीय बाजार में जीरे की मांग बढ़ी। गुजरात के व्यापारियों को फायदा।",
-      content: "यूरोप और अमेरिकी बाजारों में जीरे की बढ़ती मांग के कारण निर्यात में तेजी आई है। राजकोट और उंझा मंडी में जीरे के भाव में अच्छी वृद्धि देखी गई है।",
-      time: "6 hours ago",
-      category: "Export",
-      urgent: false,
-      image: "/api/placeholder/400/200"
-    },
-    {
-      id: 4,
-      title: "Weather Alert: Heavy Rains Expected",
-      summary: "मौसम विभाग की चेतावनी। अगले 3 दिन भारी बारिश की संभावना।",
-      content: "मौसम विभाग ने उत्तर और मध्य भारत में अगले 3 दिनों तक भारी बारिश की चेतावनी जारी की है। किसानों को सलाह दी गई है कि वे अपनी फसल की सुरक्षा के लिए आवश्यक कदम उठाएं।",
-      time: "8 hours ago",
-      category: "Weather",
-      urgent: true,
-      image: "/api/placeholder/400/200"
-    }
-  ];
+  const { data } = useQuery({ queryKey: ["news", { page: 1 }], queryFn: () => fetchNews({ page: 1, perPage: 10 }) });
+  const news = data?.data || [];
 
   const categories = [
     { id: "all", name: "All News", count: news.length },
-    { id: "urgent", name: "Urgent", count: news.filter(n => n.urgent).length },
-    { id: "market", name: "Market", count: news.filter(n => n.category === "Market Update").length },
-    { id: "policy", name: "Policy", count: news.filter(n => n.category === "Policy").length },
+    { id: "urgent", name: "Urgent", count: news.filter((n: any) => n.urgent).length },
+    { id: "market", name: "Market", count: news.filter((n: any) => (n.category||"").toLowerCase().includes("market")).length },
+    { id: "policy", name: "Policy", count: news.filter((n: any) => (n.category||"").toLowerCase().includes("policy")).length },
   ];
 
   return (
@@ -157,9 +120,11 @@ const BroadcastPage = () => {
                           Save
                         </Button>
                       </div>
-                      <Button variant="outline" size="sm">
-                        Read Full Article
-                      </Button>
+                      <Link to={`/broadcast/${article.id}`}>
+                        <Button variant="outline" size="sm">
+                          Read Full Article
+                        </Button>
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>

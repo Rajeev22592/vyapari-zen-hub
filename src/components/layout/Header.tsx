@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageToggle from "@/components/ui/LanguageToggle";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import { Link } from "react-router-dom";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const { t } = useLanguage();
@@ -32,13 +35,65 @@ const Header = () => {
         {/* Actions */}
         <div className="flex items-center space-x-2">
           <LanguageToggle />
+          <ThemeToggle />
           <Button variant="ghost" size="sm" className="relative">
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full text-xs"></span>
           </Button>
-          <Button variant="ghost" size="sm" className="sm:hidden">
-            <Menu className="h-5 w-5" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuItem asChild>
+                <Link to="/area-selection">Area Selection</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/marketplace">Marketplace</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/watchlist">Watchlist</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/analysis">Analysis</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/markets-up">Markets Up</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/markets-down">Markets Down</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/total-mandis">Total Mandis</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/total-commodities">Total Commodities</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/transactions">Transactions</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/notifications">Notifications</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/directory/join">Join Network</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/about">About</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/help">Help & Support</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/privacy-security">Privacy & Security</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/settings">Settings</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>

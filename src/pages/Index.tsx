@@ -9,8 +9,16 @@ import QuickActions from "@/components/home/QuickActions";
 import NewsSection from "@/components/home/NewsSection";
 import { useState } from "react";
 
+type Filters = {
+  state: string;
+  district: string;
+  market: string;
+  commodity: string;
+  search: string;
+};
+
 const Index = () => {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Filters>({
     state: "",
     district: "",
     market: "",
@@ -18,7 +26,7 @@ const Index = () => {
     search: ""
   });
 
-  const handleFiltersChange = (newFilters: any) => {
+  const handleFiltersChange = (newFilters: Filters) => {
     setFilters(newFilters);
   };
 

@@ -1,37 +1,41 @@
 import { TrendingUp, MapPin, BarChart3, ShoppingCart } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchOverviewStats } from "@/services/stats";
 
 const ENamStats = () => {
   const { t } = useLanguage();
 
+  const { data } = useQuery({ queryKey: ["stats","overview"], queryFn: fetchOverviewStats });
+
   const stats = [
     {
       icon: MapPin,
-      value: "1,361",
+      value: data ? String((data as any).totalRegisteredMandis) : "-",
       label: t("enam.totalMandis"),
-      trend: "+47",
+      trend: "",
       color: "text-primary"
     },
     {
       icon: BarChart3,
-      value: "22",
+      value: data ? String((data as any).totalStatesAndUTs) : "-",
       label: t("enam.totalStates"),
-      trend: "+3",
+      trend: "",
       color: "text-accent"
     },
     {
       icon: TrendingUp,
-      value: "856",
+      value: data ? String((data as any).liveMarketsToday) : "-",
       label: t("enam.liveMarkets"),
-      trend: "+124",
+      trend: "",
       color: "text-green-600"
     },
     {
       icon: ShoppingCart,
-      value: "236",
+      value: data ? String((data as any).commoditiesTraded) : "-",
       label: t("enam.commoditiesTraded"),
-      trend: "+18",
+      trend: "",
       color: "text-orange-600"
     }
   ];

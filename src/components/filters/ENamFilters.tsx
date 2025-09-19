@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -10,6 +8,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchStates, fetchDistricts, fetchMarketsByDistrict, fetchCommoditiesBySegment, fetchSegmentsWithCommodities } from "@/services/regions";
+import { useToast } from "@/hooks/use-toast";
 
 interface FilterState {
   state: string;
@@ -40,6 +41,7 @@ interface StateData {
 
 const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
   const { t } = useLanguage();
+  const { toast } = useToast();
   const [filters, setFilters] = useState<FilterState>({
     state: "",
     district: "",
@@ -47,6 +49,35 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
     commodity: "",
     search: ""
   });
+
+  // Backend-driven lists (phase-1 defaults to grains segment for commodities)
+  const { data: apiStates, isError: statesError } = useQuery({ queryKey: ["filters","states"], queryFn: fetchStates });
+  const { data: apiDistricts, isError: districtsError } = useQuery({
+    queryKey: ["filters","districts", filters.state],
+    queryFn: () => fetchDistricts(filters.state),
+    enabled: Boolean(filters.state)
+  });
+  const { data: apiMarkets, isError: marketsError } = useQuery({
+    queryKey: ["filters","markets", filters.state, filters.district],
+    queryFn: () => fetchMarketsByDistrict(filters.state, filters.district),
+    enabled: Boolean(filters.state && filters.district)
+  });
+  const { data: apiCommodities, isError: commoditiesError } = useQuery({
+    queryKey: ["filters","commodities","grains"],
+    queryFn: () => fetchCommoditiesBySegment("grains"),
+  });
+
+  // Get all segments with commodities for better commodity selection
+  const { data: segmentsWithCommodities } = useQuery({
+    queryKey: ["filters","segments-with-commodities"],
+    queryFn: fetchSegmentsWithCommodities,
+  });
+
+  useEffect(() => {
+    if (statesError || districtsError || marketsError || commoditiesError) {
+      toast({ title: "Network error", description: "Some filter data failed to load.", variant: "destructive" });
+    }
+  }, [statesError, districtsError, marketsError, commoditiesError, toast]);
 
   // e-NAM registered states with districts and mandis (based on actual e-NAM data)
   const statesData: Record<string, StateData> = {
@@ -309,6 +340,9 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
 
   // Get available districts based on selected state
   const getAvailableDistricts = () => {
+    if (apiDistricts && Array.isArray(apiDistricts)) {
+      return apiDistricts.map((d: any) => ({ id: String(d.id), name: d.name }));
+    }
     if (!filters.state || !statesData[filters.state]) return [];
     const stateData = statesData[filters.state];
     return Object.entries(stateData.districts).map(([key, district]) => ({
@@ -319,6 +353,9 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
 
   // Get available mandis based on selected district
   const getAvailableMandis = () => {
+    if (apiMarkets && Array.isArray(apiMarkets)) {
+      return apiMarkets.map((m: any) => ({ id: String(m.id), name: m.name }));
+    }
     const stateData = statesData[filters.state];
     if (!filters.state || !filters.district || !stateData?.districts[filters.district]) return [];
     const districtData = stateData.districts[filters.district];
@@ -341,6 +378,7 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
     }
     
     setFilters(newFilters);
+    toast({ title: "Filters updated", description: `${key} set.`, variant: "default" });
   };
 
   // Auto-save filters to localStorage
@@ -370,20 +408,59 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
           <p className="text-sm text-muted-foreground">{t("filters.subtitle")}</p>
         </div>
 
+        {/* Applied filters pill bar */}
+        <div className="flex flex-wrap gap-2 text-xs">
+          {filters.state && (
+            <span className="px-2 py-1 bg-muted text-foreground rounded-full border">
+              {t("filters.state")}:
+              <button className="ml-1 text-primary hover:underline" onClick={() => handleFilterChange("state", "")}>×</button>
+            </span>
+          )}
+          {filters.district && (
+            <span className="px-2 py-1 bg-muted text-foreground rounded-full border">
+              {t("filters.district")}:
+              <button className="ml-1 text-primary hover:underline" onClick={() => handleFilterChange("district", "")}>×</button>
+            </span>
+          )}
+          {filters.market && (
+            <span className="px-2 py-1 bg-muted text-foreground rounded-full border">
+              {t("filters.market")}:
+              <button className="ml-1 text-primary hover:underline" onClick={() => handleFilterChange("market", "")}>×</button>
+            </span>
+          )}
+          {filters.commodity && (
+            <span className="px-2 py-1 bg-muted text-foreground rounded-full border">
+              {t("filters.commodity")}:
+              <button className="ml-1 text-primary hover:underline" onClick={() => handleFilterChange("commodity", "")}>×</button>
+            </span>
+          )}
+          {(filters.state || filters.district || filters.market || filters.commodity || filters.search) && (
+            <button className="px-2 py-1 bg-destructive/10 text-destructive rounded-full border border-destructive/30" onClick={() => setFilters({ state: "", district: "", market: "", commodity: "", search: "" })}>
+              Clear all
+            </button>
+          )}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {/* State Selection */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">{t("filters.state")}</label>
-            <Select value={filters.state} onValueChange={(value) => handleFilterChange("state", value)}>
+            <Select value={filters.state || undefined} onValueChange={(value) => handleFilterChange("state", value)}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t("filters.selectState")} />
               </SelectTrigger>
               <SelectContent className="bg-background border border-border shadow-elevated z-50">
-                {Object.entries(statesData).map(([key, state]) => (
-                  <SelectItem key={key} value={key} className="hover:bg-muted">
-                    {state.name[language]}
-                  </SelectItem>
-                ))}
+                {(apiStates && Array.isArray(apiStates)
+                  ? apiStates.map((s: any) => (
+                      <SelectItem key={s.id} value={String(s.id)} className="hover:bg-muted">
+                        {s.name}
+                      </SelectItem>
+                    ))
+                  : Object.entries(statesData).map(([key, state]) => (
+                      <SelectItem key={key} value={key} className="hover:bg-muted">
+                        {state.name[language]}
+                      </SelectItem>
+                    )))}
               </SelectContent>
             </Select>
           </div>
@@ -392,7 +469,7 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">{t("filters.district")}</label>
             <Select 
-              value={filters.district} 
+              value={filters.district || undefined} 
               onValueChange={(value) => handleFilterChange("district", value)}
               disabled={!filters.state}
             >
@@ -413,7 +490,7 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">{t("filters.market")}</label>
             <Select 
-              value={filters.market} 
+              value={filters.market || undefined} 
               onValueChange={(value) => handleFilterChange("market", value)}
               disabled={!filters.district}
             >
@@ -433,16 +510,30 @@ const ENamFilters: React.FC<ENamFiltersProps> = ({ onFiltersChange }) => {
           {/* Commodity Selection */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">{t("filters.commodity")}</label>
-            <Select value={filters.commodity} onValueChange={(value) => handleFilterChange("commodity", value)}>
+            <Select value={filters.commodity || undefined} onValueChange={(value) => handleFilterChange("commodity", value)}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t("filters.selectCommodity")} />
               </SelectTrigger>
               <SelectContent className="bg-background border border-border shadow-elevated z-50">
-                {commodities.map((commodity) => (
-                  <SelectItem key={commodity.id} value={commodity.id} className="hover:bg-muted">
-                    {commodity.name[language]}
-                  </SelectItem>
-                ))}
+                {(segmentsWithCommodities && Array.isArray(segmentsWithCommodities)
+                  ? segmentsWithCommodities.flatMap(segment => 
+                      segment.commodities.map((c: any) => (
+                        <SelectItem key={c.id} value={String(c.id)} className="hover:bg-muted">
+                          {c.name}
+                        </SelectItem>
+                      ))
+                    )
+                  : (apiCommodities && Array.isArray(apiCommodities)
+                    ? apiCommodities.map((c: any) => (
+                        <SelectItem key={c.id} value={String(c.id)} className="hover:bg-muted">
+                          {c.name}
+                        </SelectItem>
+                      ))
+                    : commodities.map((commodity) => (
+                        <SelectItem key={commodity.id} value={commodity.id} className="hover:bg-muted">
+                          {commodity.name[language]}
+                        </SelectItem>
+                      ))))}
               </SelectContent>
             </Select>
           </div>

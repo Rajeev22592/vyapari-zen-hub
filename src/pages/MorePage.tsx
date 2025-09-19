@@ -6,45 +6,48 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 
 const MorePage = () => {
+  const navigate = useNavigate();
+
   const menuItems = [
     {
       icon: User,
       title: "Profile Settings",
       description: "Manage your account details",
-      action: () => {},
+      action: () => navigate('/profile'),
     },
     {
       icon: Bell,
       title: "Notifications",
       description: "Manage alerts and updates",
-      action: () => {},
+      action: () => navigate('/notifications'),
       badge: "3"
     },
     {
       icon: Settings,
       title: "App Settings",
       description: "Customize your experience",
-      action: () => {},
+      action: () => navigate('/settings'),
     },
     {
       icon: Shield,
       title: "Privacy & Security",
       description: "Control your data and privacy",
-      action: () => {},
+      action: () => navigate('/privacy-security'),
     },
     {
       icon: HelpCircle,
       title: "Help & Support",
       description: "Get help and contact support",
-      action: () => {},
+      action: () => navigate('/help'),
     },
     {
       icon: Info,
       title: "About Vyapari Darbaar",
       description: "App version and information",
-      action: () => {},
+      action: () => navigate('/about'),
     },
   ];
 
